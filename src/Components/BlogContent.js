@@ -1,127 +1,116 @@
-import axios from 'axios';
+import { useOutletContext, useNavigate } from "react-router-dom";
 
-import { useState, useEffect } from 'react';
+import { useState } from "react";
 
-import { useParams, useNavigate } from 'react-router-dom';
+import axios from "axios";
 
+const BlogContent = () => {
 
-const urlEndpoint = 'http://localhost:3000/blogs';
+  const [editBlog, setNewBlog] = useState({
 
-export default function BlogContent() {
+    title: "",
 
-  const [blog, setBlog] = useState({
+    text: "",
 
-    _id: '',
-  
-    title: '',
+    author: "",
 
-    author: '',
-
-    createdAt: '',
-
-    text: '',
-
-    lastModified: '',
+    year: "",
 
     categories: [],
-
+    
   });
 
+  const bloggerData = useOutletContext();
 
-  const { id } = useParams();
+  const navigateBlog = useNavigate();
 
-  const navigate = useNavigate();
-  
-  const [editBlog, setEditBlog] = useState(false);
-  
-  useEffect(() => {
+  const handleChange = (e) => {
+    e.preventDefault();
 
-    axios.get(`${urlEndpoint}/get-one/${id}`).then((response) => {
-
-      setBlog(response.data.post);
-
+    const { name, value } = e.target;
+    setNewBlog((blog) => {
+      return {
+        ...blog,
+        [name]: value,
+      };
     });
-  }, [id]);
-
-  const handleSubmit = async (event) => {
-
-    event.preventDefault();
-    
-    const formData = new FormData(event.target);
-    
-    const updatedBlog = {
-
-      title: formData.get('title'),
-
-      author: formData.get('author'),
-
-      text: formData.get('text'),
-
-    
-      categories: [], 
-
-    };
-    
-    await axios.put(`${urlEndpoint}/update-one/${id}`, updatedBlog);
-  
-    navigate(`/blogs/${id}`);
   };
 
-  const handleDelete = async () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-    await axios.delete(`${urlEndpoint}/delete-one/${id}`);
-
-    navigate('/blogs');
-
+    axios
+      .post(`${bloggerData}/create-new-blog`, editBlog)
+      .then((res) => {
+        setNewBlog(res.data.blog);
+        navigateBlog("/blog-new-added");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
-
-  if (!blog) {
-    return <div>Loading...</div>;
-  }
 
   return (
+    <div className="blog-content">
 
-    <div className='blog-content'>
+      <div className="blog-form-area">
+       
+        <br />
 
-      {editBlog ? (
+        <h1>Add Blog</h1>
+      
+        <br />
 
         <form onSubmit={handleSubmit} className="edit-form">
 
-          <label htmlFor='title'>Title:</label>
+          <label htmlFor="title">Blog title:</label>
+         
+          <br />
 
-          <input type='text' id='title' name='title' defaultValue={blog.title} />
+          <input type="text"name="title"value={editBlog.title}onChange={handleChange}placeholder="Add title" required/>
 
-          <label htmlFor='author'>Author:</label>
+          <br />
 
-          <input type='text' id='author' name='author' defaultValue={blog.author} />
+          <label htmlFor="text">Blog text:</label>
 
-          <label htmlFor='text'>Text:</label>
+          <br />
 
-          <textarea id='text' name='text' defaultValue={blog.text}></textarea>
+          <textarea name="text" value={editBlog.text} onChange={handleChange}placeholder="Add Info" required></textarea>
 
-          <button type='submit'>Save</button>
+          <br />
+
+          <label htmlFor="year">Blog Year:</label>
+
+          <br />
+
+          <input type="text" name="year" value={editBlog.year} onChange={handleChange}placeholder="Enter the Year" required/>
+
+          <br />
+
+          <label htmlFor="author">Blog author:</label>
+
+          <br />
+
+          <input type="text" name="author" value={editBlog.author} onChange={handleChange}placeholder="Enter the Author" required/>
+
+          <br />
+
+          <label htmlFor="categories">Blog Categories:</label>
+
+         <br />
+
+          <input type="text" name="categories" value={editBlog.categories} onChange={handleChange} placeholder="Enter Category" required/>
+
+          <br />
+  
+          <button type='submit'>Add Blog</button>
 
         </form>
 
-      ) : (
-        <>
-          <h1>{blog.title}</h1>
-
-          <h2>author: {blog.author}</h2>
-
-          <h3>createdAt: {blog.createdAt}</h3>
-
-          <p>{blog.text}</p>
-
-          <button onClick={() => setEditMode(true)}>EditBlog</button>
-
-          <button onClick={handleDelete}>DeleteBlog</button>
-        </>
-      )}
-      
+      </div>
       
     </div>
-
   );
+};
 
-}
+export default BlogContent;

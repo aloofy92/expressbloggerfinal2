@@ -1,51 +1,21 @@
-
-
-import axios from 'axios';
-
-import { useState, useEffect } from 'react';
-
-import { Link } from 'react-router-dom';
-
-const urlEndpoint = 'http://localhost:3000/blogs';
-
-export default function BlogCard() {
-
-    const [blogs, setBlogs] = useState([]);
-
-    useEffect(() => {
-
-        axios.get(`${urlEndpoint}/all`).then((response) => {
-
-            setBlogs(response.data.blogs);
-
-        });
-
-    }, []);
-
-
-
+const BlogCard = (props) => {
+    
+    const { blogs } = props;
+  
     return (
+      <div>
+        <h1>{blogs.title}</h1>
+        <br/>
+        <p>{blogs.author}</p>
+        <br/>
+        <p>{blogs.text}</p>
+        <br/>
+        <p>Created: {blogs.createdAt}</p>
 
-        <div className='blog-card-content'>
+        {blogs.updatedAt && <p>Updated: {blogs.updatedAt}</p>}
 
-            {blogs.map((blog) => (
-
-                <div key={blog.id}>
-
-                    <Link to={`/blogs/${blog.id}`}>
-                       
-                        <h1>{blog.title}</h1>
-
-                    </Link>
-
-                    <h2>by {blog.author}</h2>
-
-                </div>
-
-            ))}
-
-        </div>
-
+      </div>
     );
-
-}
+  };
+  
+  export default BlogCard;

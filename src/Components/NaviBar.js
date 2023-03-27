@@ -1,17 +1,29 @@
-import { Link } from 'react-router-dom';
+import { Link, Outlet } from "react-router-dom";
 
-export default function NaviBar() {
+const NaviBar = () => {
 
-    return (
+  const bloggerData = process.env.REACT_APP_ENDPOINT;
 
-        <nav className='navi-bar'>
+  return (
 
-            <div className='navi-bar-links'>
-               
-                <Link to='/blogs' className='blogs-link'>Blogs</Link>
+    <div>
 
-            </div>
+      <div className="header">
+
+        <h1>Blog Application</h1>
+
+        <nav className="navi-Bar">
+
+          <Link to={"/"}>HomePage</Link>    <Link to={"/blogs"}>Blog's List</Link>
 
         </nav>
-    );
-}
+
+      </div>
+
+      <Outlet context={bloggerData} />
+
+    </div>
+  );
+};
+
+export default NaviBar;

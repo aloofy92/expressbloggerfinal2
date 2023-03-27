@@ -1,38 +1,100 @@
-.App {
+* {
+  font-weight: 300;
   text-align: center;
 }
 
-.App-logo {
-  height: 30vmin;
-  pointer-events: none;
+body {
+  background-color: aqua;
+  color: gray;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-blink infinite 20s linear;
-  }
+.list-area {
+ 
+  margin: 50px 130px 0 130px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  padding: 0 0 0 80px;
 }
 
-.App-header {
-  background-color: blue;
-  min-height: 100vh;
+.blog-card {
+  border-radius: 15px;
+  margin: 50px;
+  background-color: Blue;
+  width: 15vw;
+  height: 10vw;
+  color: #776274;
+}
+
+.nav-bar {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: pink;
+  gap: 50px;
 }
 
-.App-link {
-  color: lightblue;
+.nav-bar a:hover {
+  color: blue;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.nav-bar a {
+  text-decoration: none;
+  color: #e6ccbe;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.bloglist-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+
+button {
+  height: 50px;
+  width: 120px;
+  cursor: pointer;
+  border: 2px solid blue;
+  border-radius: 15px;
+  color: white;
+  background-color: blue;
+  font-size: 1em;
+}
+
+button a {
+  text-decoration: none;
+  color: white;
+}
+
+
+
+.header {
+  padding-bottom: 30px;
+  text-align: center;
+}
+
+
+.blog-form-area {
+  
+  width: 100vw;
+}
+
+.blog-area {
+  display: flex;
+  justify-content: center;
+}
+
+input,
+textarea {
+  height: 40px;
+  width: 250px;
+  border-radius: 15px;
+  margin-bottom: 40px;
+  border: 5px solid #c8cc92;
+  background-color: #c8cc92;
+  font-size: larger;
+}
+
+input:focus,
+textarea:focus {
+  border: 5px solid #a07178;
+  outline: 0;
 }

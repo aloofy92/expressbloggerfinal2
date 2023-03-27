@@ -1,22 +1,56 @@
-import './App.css';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Blogs from './Pages/Blogs';
-import BlogPost from './Components/BlogPost';
-import BlogForm from './Components/BlogForm';
-import NavBar from './Components/NavBar';
+import "./App.css";
+
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
+import HomePage from "./Components/HomePage";
+
+import Navibar from "./Components/NaviBar";
+
+import BlogList from "./BlogPages/BlogList";
+
+import AddBlog from "./BlogPages/Add";
+
+import Check from "./BlogPages/check";
+
+import DeleteOneBlog from "./Components/DeleteOneBlog";
+
+import Update from "./Components/Update";
+
+import DeleteMultiple from "./Components/DeleteMultiple";
+
+import BlogForm from "./BlogPages/BlogForm";
 
 function App() {
+
   return (
-    <BrowserRouter>
-      <NavBar />
+
+    <Router>
+
       <Routes>
-        <Route path="/" element={<h1>Home</h1>} />
-        <Route path="/blogs" element={< Blogs /> } />
-        <Route path="/blogs/:id" element={<BlogPost /> } />
-        <Route path="/create-blog" element={<BlogForm />} />
-        <Route path="*" element={<h1>Not Found</h1>} />
+
+        <Route element={<Navibar />}>
+
+          <Route path="/" element={<HomePage />} />
+
+          <Route path="/blogs" element={<BlogList />} />
+
+          <Route path="/create-blog" element={<AddBlog />} />
+
+          <Route path="/blog/:id" element={<BlogForm />} />
+
+          <Route path="/blog-added" element={<Check />} />
+
+          <Route path="/blog-deleted" element={<DeleteOneBlog />} />
+
+          <Route path="/blogs-deleted" element={<DeleteMultiple />} />
+
+          <Route path="/blog-update/:id" element={<Update />} />
+
+        </Route>
+
       </Routes>
-    </BrowserRouter>
+
+    </Router>
   );
 }
 
